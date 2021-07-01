@@ -1,0 +1,21 @@
+namespace:
+  name: demo
+
+replicas: 1
+
+image:
+  name: nginx
+  tag: alpine
+
+
+resourcesRequest:
+  cpu: 50m
+  memory: 256Mi
+
+service:
+  type: ClusterIP
+  port: 8111
+  targetPort: 8111
+
+configmap:
+  data: "version: alpine"

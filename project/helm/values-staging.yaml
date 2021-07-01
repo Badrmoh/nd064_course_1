@@ -1,0 +1,14 @@
+namespace:
+  name: staging
+
+replicas: 1
+
+image:
+  tag: 1.18.0
+
+resourcesRequest:
+  cpu: 50m
+  memory: 128Mi
+
+configmap:
+  data: "version: 1.18.0"
