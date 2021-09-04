@@ -1,11 +1,44 @@
 ## Docker commands used to build the application 
 # TODO: insert the docker build command
+```bash
+docker build -t techtrends -f ./Dockerfile  .
+```
 
 ## Docker commands used to run the application
 # TODO: insert the docker run command
+```bash
+docker run --rm --name techtrends -itdp 7111:3111 techtrends
+```
 
 ## Docker commands used to get the application logs
 # TODO: insert the docker logs command
+```bash
+docker logs -f techtrends
+```
 
 ## Logs from the container running the TechTrends application
 # TODO: paste logs from the Docker container 
+```bash
+> docker logs techtrends
+ * Serving Flask app "app" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+INFO:werkzeug: * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:23] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:23] "GET /static/css/main.css HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:24] "GET /favicon.ico HTTP/1.1" 404 -
+DEBUG:app:The About Us page is retrieved.
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:28] "GET /about HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:36] "GET /healthz HTTP/1.1" 200 -
+INFO:app:Article "2020 CNCF Annual Report" is retrieved.
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:39] "GET /1 HTTP/1.1" 200 -
+INFO:app:Article "Kubernetes v1.20 Release Notes" is retrieved.
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:42] "GET /3 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:31:45] "GET /create HTTP/1.1" 200 -
+INFO:app:Article "Test Post" is created.
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:32:02] "POST /create HTTP/1.1" 302 -
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:32:02] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [04/Sep/2021 18:32:10] "GET /metrics HTTP/1.1" 200 -
+```
