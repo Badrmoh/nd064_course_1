@@ -8,11 +8,15 @@ total_conn = 0
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
-    connection = sqlite3.connect('database.db')
-    connection.row_factory = sqlite3.Row
-    global total_conn
-    total_conn = total_conn + 1
-    return connection
+    try:
+        connection = sqlite3.connect('file:database.db?mode=rw',uri=True)
+        connection.row_factory = sqlite3.Row
+        global total_conn
+        total_conn = total_conn + 1
+        return connection
+    except sqlite3.OperationalError as e:
+        app.logger.debug(e.args[0])
+        return ''
 
 # Function to get a post using its ID
 def get_post(post_id):
@@ -28,6 +32,19 @@ def get_post_count():
     count = connection.execute('SELECT COUNT(id) FROM posts').fetchone()[0]
     connection.close()
     return count
+
+# Check posts table exists
+def check_db():
+    conn = get_db_connection()
+    if conn == '':
+        return 'error'
+    else:
+        try:
+            conn.execute('SELECT * FROM posts')
+            return 'success'
+        except sqlite3.OperationalError as e:
+            app.logger.debug(str(e.args[0]))
+            return 'error'
 
 # Define the Flask application
 app = Flask(__name__)
@@ -52,10 +69,22 @@ def metrics():
 # Health endpoint
 @app.route('/healthz')
 def healthz():
-    response = jsonify(
-        result='OK - healthy'
-    )
-    return response, 200
+    response = ''
+    code = ''
+    check = check_db()
+    if check == 'error':
+        response = jsonify(
+            result='ERROR - unhealthy'
+        )
+        code = 500
+
+    elif check == 'success':
+        response = jsonify(
+            result='OK - healthy'
+        )
+        code = 200
+    
+    return response, code
 
 # Define how each individual article is rendered 
 # If the post ID is not found a 404 page is shown
