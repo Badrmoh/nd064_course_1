@@ -19,7 +19,7 @@ jobs:
             latest=auto
           tags: |
             type=schedule,prefix=nightly-,pattern={{date 'YYYYMMDD'}}
-            type=ref,prefix=,event=push tag
+            type=ref,prefix=,event=tag
             type=sha,prefix=commit-,format=short
 
       - name: Set up QEMU
